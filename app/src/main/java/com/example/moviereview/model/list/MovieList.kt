@@ -1,4 +1,6 @@
-package com.example.moviereview.model
+package com.example.moviereview.model.list
+
+import com.example.moviereview.model.list.Movie
 
 data class MovieList(
     val page: Int,

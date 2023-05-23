@@ -1,35 +1,36 @@
 package com.example.moviereview.presentation.list
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.moviereview.Links.POSTER_BASE_URL
+import com.example.moviereview.Links.POSTER_URL
 import com.example.moviereview.databinding.MovieItemBinding
-import com.example.moviereview.model.Movie
+import com.example.moviereview.model.list.Movie
 
-class MovieListAdapter(val onClick: (model: Movie, position: Int) -> Unit) :
-    RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>() {
+class MovieListAdapter(val onClick: (model: Movie, position: Int) -> Unit) :  RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>() {
 
     private var moviesList = emptyList<Movie>()
+
     inner class MovieViewHolder(private val binding: MovieItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: Movie, position: Int) {
-            var moviePosterPath = POSTER_BASE_URL + movie.poster_path
+        fun bind(movies: Movie, position: Int) {
+                val moviePosterPath = POSTER_URL + movies.poster_path
 
-            with(binding) {
-                binding.title.text = movie.title
-                binding.description.text = movie.overview
-                binding.releaseDate.text = movie.release_date
+                with(binding) {
+                    title.text = movies.title
+                    description.text = movies.overview
+                    releaseDate.text = movies.release_date.substring(0,4)
 
-                btn.setOnClickListener {
-                    onClick(movie, position)
+                    btn.setOnClickListener {
+                        onClick(movies, position)
+                    }
+
+                    Glide.with(firstImage.context)
+                        .load(moviePosterPath)
+                        .into(firstImage)
                 }
-
-                Glide.with(binding.firstImage.context)
-                    .load(moviePosterPath)
-                    .into(binding.firstImage)
-            }
         }
 
     }
@@ -40,8 +41,8 @@ class MovieListAdapter(val onClick: (model: Movie, position: Int) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = moviesList[position]
-        holder.bind(movie, position)
+            val movie = moviesList[position]
+            holder.bind(movie, position)
     }
 
     override fun getItemCount(): Int {
@@ -49,10 +50,10 @@ class MovieListAdapter(val onClick: (model: Movie, position: Int) -> Unit) :
     }
 
     fun setMoviesList(newList: List<Movie>) {
-        val diffCallback = MovieDiffCallback(moviesList, newList)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        moviesList = newList
-        diffResult.dispatchUpdatesTo(this)
+            val diffCallback = MovieDiffCallback(moviesList, newList)
+            val diffResult = DiffUtil.calculateDiff(diffCallback)
+            moviesList = newList
+            diffResult.dispatchUpdatesTo(this)
     }
 
     inner class MovieDiffCallback(private val oldList: List<Movie>, private val newList: List<Movie>) : DiffUtil.Callback() {

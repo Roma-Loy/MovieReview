@@ -1,6 +1,7 @@
 package com.example.moviereview.presentation.list
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ class MovieListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         viewmodel = ViewModelProvider(this).get(MovieListViewModel::class.java)
         binding = FragmentMovieListBinding.inflate(layoutInflater, container, false)
         return binding.root
@@ -26,16 +28,15 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+            adapter = MovieListAdapter { movie, _ ->
+                findNavController().navigate(MovieListFragmentDirections.actionMovieListFragmentToMovieInfoFragment(movie))
 
-        adapter = MovieListAdapter { movie, position ->
-            findNavController().navigate(MovieListFragmentDirections.actionMovieListFragmentToMovieInfoFragment())
-
-        }
-        binding.recycler.adapter = adapter
-        viewmodel.getMovies()
-        viewmodel.myMovies.observe(viewLifecycleOwner) {
-            adapter.setMoviesList(it.body()!!.results)
-        }
+            }
+            binding.recycler.adapter = adapter
+            viewmodel.getMovies()
+            viewmodel.moviesList.observe(viewLifecycleOwner) {
+                adapter.setMoviesList(it.body()!!.results)
+            }
 
 
     }

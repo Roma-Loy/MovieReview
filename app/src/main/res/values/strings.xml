@@ -1,12 +1,14 @@
 <resources>
-    <string name="app_name">FilmsApp</string>
+    <string name="app_name">MovieReview</string>
     <string name="details">Детальніше</string>
     <string name="watch">Дивитись</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="Top_series">Топ серіалів</string>
-    <string name="overview">Overview</string>
+    <string name="Popular">Популярні</string>
+    <string name="overview"><b>Обзор</b></string>
     <string name="poster">Картинка фільму</string>
     <string name="description">Опис</string>
     <string name="movieName">Назва фільму</string>
     <string name="release">Дата релізу</string>
+    <string name="tagline">TagLine</string>
+    <string name="movie_title">Movie Title</string>
 </resources>

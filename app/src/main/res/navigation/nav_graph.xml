@@ -6,11 +6,6 @@
     app:startDestination="@id/movieListFragment">
 
     <fragment
-        android:id="@+id/movieInfoFragment"
-        android:name="com.example.moviereview.presentation.info.MovieInfoFragment"
-        android:label="fragment_movie_info"
-        tools:layout="@layout/fragment_movie_info" />
-    <fragment
         android:id="@+id/movieListFragment"
         android:name="com.example.moviereview.presentation.list.MovieListFragment"
         android:label="fragment_movie_list"
@@ -18,5 +13,15 @@
         <action
             android:id="@+id/action_movieListFragment_to_movieInfoFragment"
             app:destination="@id/movieInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieInfoFragment"
+        android:name="com.example.moviereview.presentation.info.MovieInfoFragment"
+        android:label="fragment_movie_info"
+        tools:layout="@layout/fragment_movie_info"
+        >
+        <argument
+            android:name="movie"
+            app:argType="com.example.moviereview.model.list.Movie" />
     </fragment>
 </navigation>
